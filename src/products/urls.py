@@ -16,12 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from products.views import add_cat,add_product,delete_product
+from products.views import add_cat,add_product,delete_product,update_product
 from products.views import list_categorie
 
 urlpatterns = [
     path('add_categorie/', add_cat,name="add_cat"),
     path('add_product/', add_product,name="add_product"),
+    path('update_product/<int:id>', update_product,name="update_product"),
     path('delete_product/<int:id>', delete_product,name="delete_product"),
     path('list_categorie/', list_categorie.as_view(),name="list_cat"),
 ]
