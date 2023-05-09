@@ -16,7 +16,12 @@ Applicatin Marcadona Publicité
 
 ### Langage et Package
 
-- Django
+- asgiref==3.6.0
+- Django==3.1.6
+- django-environ==0.10.0
+- psycopg2==2.9.6
+- pytz==2023.3
+- sqlparse==0.4.4
 
 ## Installation
 
@@ -31,12 +36,12 @@ $ creation d'un environnemnt virtuel
 $ pyhton install -r requirements
 $ mise en place d'un fichier .env sous src/mercadona_publicite 
 $ avec les données suivante
-> - SECRET_KEY=''
-> - DATABASE_NAME=""
-> - DATABASE_USER=""
-> - DATABASE_PASS=""
-> - DATABASE_HOST=""
-> - DATABASE_PORT="5432"
+- SECRET_KEY=''
+- DATABASE_NAME=""
+- DATABASE_USER=""
+- DATABASE_PASS=""
+- DATABASE_HOST=""
+- DATABASE_PORT="5432"
 ```
 
 ## Running the app
