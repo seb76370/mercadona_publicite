@@ -16,8 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from products.views import add_cat
+from products.views import add_cat, list_categorie
 
 urlpatterns = [
     path('add_categorie/', add_cat,name="add_cat"),
+    path('list_categorie/', list_categorie.as_view(),name="list_cat"),
 ]
