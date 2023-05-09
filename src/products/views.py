@@ -37,7 +37,7 @@ def add_product(request):
           errors = form.errors.as_data()
           print(errors)
           # errors_text = str(errors['Libelle'][0])
-          return JsonResponse({"message":"fail","error":"eee"})
+          return JsonResponse({"message":"fail","error":"error"})
     
 @csrf_exempt
 def delete_product(request,id):
@@ -52,6 +52,26 @@ def delete_product(request,id):
      product.delete()
 
      return JsonResponse({"message":"success"})
+
+@csrf_exempt
+def update_product(request,id):
+     if request.method != "POST":
+          return HttpResponse("Erreur de requete")
+
+     product = Produits.objects.get(pk=id)
+   
+     if not product:
+        return JsonResponse({"message":"fail","error":"Produit inconnu"})
+  
+     form = ProduitForm(request.POST, request.FILES, instance=product)
+
+     if form.is_valid():
+          form.save() 
+          return JsonResponse({"message":"success"})
+     else:
+          errors = form.errors.as_data()
+          print(errors)
+          return JsonResponse({"message":"fail","error":"eee"})
 
 
 class list_categorie(ListView):
