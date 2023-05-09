@@ -1,0 +1,8 @@
+<h1>list Categorie</h1>
+<div>
+  <select name="thelist">
+    {% for object in list_cat %}
+    <option>{{object.Libelle}}</option>
+    {% endfor %}
+  </select>
+</div>
