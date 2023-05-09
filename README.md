@@ -33,7 +33,7 @@ Petite intro installation
 cloner le repo
 git clone https://github.com/seb76370/mercadona_publicite.git
 $ creation d'un environnemnt virtuel
-$ pyhton install -r requirements
+$ pyhton install -r requirements.txt
 $ mise en place d'un fichier .env sous src/mercadona_publicite 
 $ avec les données suivante
 - SECRET_KEY=''
