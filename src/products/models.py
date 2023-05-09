@@ -1,7 +1,7 @@
 from django.db import models
 
 class Categories(models.Model):
-    Libelle = models.CharField(max_length=50)
+    Libelle = models.CharField(max_length=50,unique=True)
 
 class Promotions(models.Model):
     datedebut = models.DateField()

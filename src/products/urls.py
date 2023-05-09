@@ -19,5 +19,5 @@ from django.urls import path
 from products.views import add_cat
 
 urlpatterns = [
-    path('ajout_categorie/', add_cat,name="add_cat"),
+    path('add_categorie/', add_cat,name="add_cat"),
 ]
