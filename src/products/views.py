@@ -4,11 +4,14 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic.list import ListView
+from rest_framework.response import Response
 
-import products
-from .models import Categories
-from products.forms import CategoriesForm, ProduitForm
+from .serializers import  CategorieSerializers, ProductsSerializers, PromotionsSerializers
+from .models import Categories, Promotions
+from .forms import CategoriesForm, ProduitForm
 from .models import Produits
+
+from pprint import pprint
 
 @csrf_exempt
 def add_cat(request):
@@ -21,7 +24,7 @@ def add_cat(request):
           return JsonResponse({"message":"success"})
     else:
           errors = form.errors.as_data()
-          errors_text = str(errors['Libelle'][0])
+          errors_text = str(errors['libelle'][0])
           return JsonResponse({"message":"fail","error":errors_text})
     
 @csrf_exempt
@@ -36,7 +39,7 @@ def add_product(request):
     else:
           errors = form.errors.as_data()
           print(errors)
-          # errors_text = str(errors['Libelle'][0])
+          # errors_text = str(errors['libelle'][0])
           return JsonResponse({"message":"fail","error":"error"})
     
 @csrf_exempt
@@ -73,10 +76,36 @@ def update_product(request,id):
           print(errors)
           return JsonResponse({"message":"fail","error":"eee"})
 
+@csrf_exempt
+def list_product(request,categorie_selected = None):
+     if request.method != "GET":
+          return HttpResponse("Erreur de requete")
 
-class list_categorie(ListView):
-     model = Categories
-     context_object_name = 'list_cat'
-     template_name = 'testlist.html'
+     products = Produits.objects.all()
 
+     if categorie_selected:
+          products = products.filter(categorie = categorie_selected)
+
+     serializer = ProductsSerializers(products, many=True)
+
+     for s in serializer.data:
+          if s['categorie']:
+               cat = Categories.objects.get(pk=s['categorie'])
+               serializerCat = CategorieSerializers(cat)
+               s['categorie'] = serializerCat.data
+
+          if s['promotions']:
+               promo = Promotions.objects.get(pk=s['promotions'])
+               serializerPromo = PromotionsSerializers(promo)
+               s['promotions'] = serializerPromo.data
+     return JsonResponse({"products":serializer.data})
+  
+
+def list_categorie(request):
+     if request.method != "GET":
+          return HttpResponse("Erreur de requete")
+
+     categories = Categories.objects.all()
+     serializer = CategorieSerializers(categories, many=True)
+     return JsonResponse({"categorie":serializer.data})
 
