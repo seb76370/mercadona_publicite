@@ -109,3 +109,5 @@ def list_categorie(request):
      serializer = CategorieSerializers(categories, many=True)
      return JsonResponse({"categorie":serializer.data})
 
+def pageproduct(request):
+     return render(request, "mercadona_publicite/pageproduct.html")

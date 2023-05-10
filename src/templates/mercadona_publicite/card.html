@@ -1,0 +1,30 @@
+
+<div class="card">
+  <img src={{ card.image }} class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">{{ card.libelle }}</h5>
+    <p class="card-text promotion">{{ card.description }}</p>
+  </div>
+</div>
+
+
+
+
+{% comment %} <div class="card">
+  <h2>test card {{ card.last_name }}</h2>
+  <h2>test card {{ card.first_name }}</h2>
+
+  {% if card.promotion %}
+  <p class ="promotion" id="{{card.first_name}}">
+    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Rerum ab libero
+    rem. Vero facere facilis possimus autem id, illum reiciendis, perspiciatis
+    ullam itaque enim nobis sapiente corrupti, molestiae nulla non?
+  </p>
+  {% else %}
+  <p >
+    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Rerum ab libero
+    rem. Vero facere facilis possimus autem id, illum reiciendis, perspiciatis
+    ullam itaque enim nobis sapiente corrupti, molestiae nulla non?
+  </p>
+  {% endif %}
+</div> {% endcomment %}

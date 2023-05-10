@@ -1,0 +1,56 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  width: 95%;
+  margin: 5px auto;
+  /* border: red Solid 3px; */
+}
+
+.container__main {
+  width: 100%;
+  height: 100%;
+  margin: 10px;
+  /* border: Green Solid 2px; */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+.container__card {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.card {
+  width: 10rem;
+}
+
+.card img {
+  width: 10rem;
+}
+
+#sticky-footer {
+  width: 100%;
+}
+
+form{
+    margin:10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap:10px;
+    justify-content: center;
+    align-items: center;
+}
+
+form button{
+    height: 35px;
+}
+
+input{
+    height:35px;
+}
