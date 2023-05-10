@@ -5,7 +5,7 @@ from .models import Categories, Produits
 class CategoriesForm(forms.ModelForm):
     class Meta:     
         model = Categories
-        fields = ('Libelle',)   
+        fields = ('libelle',)   
 
 
 class ProduitForm(forms.ModelForm):
