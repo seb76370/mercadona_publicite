@@ -1,0 +1,14 @@
+{% extends 'mercadona_publicite/base.html' %}
+{% load static %} 
+{% block header%}
+    <link rel="stylesheet" href="{% static 'promotion.css' %}" />
+    <link rel="stylesheet" href="{% static 'content.css' %}" />
+{%endblock%} 
+
+{% block content%}
+
+     {% for card in cards %} 
+        {% include 'mercadona_publicite/card.html' with card=card %} 
+    {% endfor %} 
+
+{%endblock%}

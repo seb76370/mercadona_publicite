@@ -1,0 +1,40 @@
+<div class="container">
+  <ul class="nav bg-info">
+    {% comment %}
+    <li class="nav-item">
+      <a class="nav-link link-light" href="/">Home</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link link-light" href="/members">MEMBERS</a>
+    </li>
+    {% endcomment %}
+    <form method="POST" action="accounts/sign_in/">
+      {% csrf_token %}
+      <div class="form-group">
+        <input
+          type="text"
+          class="form-control"
+          id="username"
+          name="username"
+          aria-describedby="usernameHelp"
+          placeholder="nom utilisateur"
+        />
+      </div>
+      <div class="form-group">
+        <input
+          type="password"
+          name="password"
+          class="form-control"
+          id="password"
+          placeholder="Mot de passe"
+        />
+      </div>
+      <button type="submit" class="btn btn-primary">Se logger</button>
+
+      {% if user.is_authenticated%}
+      <label>Utilisateur connecté : {{ user.username}}</label>
+      <a href="{% url 'pageproduct'%}">Ajouter un Produit</a>
+      {% endif%}
+    </form>
+  </ul>
+</div>
