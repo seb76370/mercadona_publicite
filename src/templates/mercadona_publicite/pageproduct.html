@@ -6,6 +6,88 @@
 {%endblock%} 
 
 {% block content%}
-    ajout produit
+<div class="container_form_product"> 
+    <form class="product_form" method="POST" action="accounts/sign_in/">
+        {% csrf_token %}
+
+            <img src="" class="card-img-top" alt="..." id="preview-image">
+            <input
+            type="file"
+            class="file-input"
+            onchange="previewImage(event)"
+          />
+
+            <div class="datas_form_product">
+                <input type="hidden" name="product_id" value="0">
+                <div class="form-group">
+                <label for="libelle">Libelle du Produit</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    id="libelle"
+                    name="libelle"
+                    aria-describedby="libelleHelp"
+                />
+                </div>
+    
+                <div class="form-group">
+                    <label for="description">Description du Produit</label>
+                    <textarea id="description" name="description"
+                            rows="2" 
+                            placeholder="description du produit du produit">
+                    </textarea>
+                </div>
+                <div class="form-group">
+                    <label for="prix">Prix du Produit</label>
+                    <input
+                    type="number"
+                    class="form-control"
+                    id="prix"
+                    name="prix"
+                    aria-describedby="prixHelp"
+                />
+                </div>
+                <div class="form-promotions">
+
+                    <div class="form_check_promotion" class="form-group">
+                        <input type="checkbox" id="promotions" name="promotions" value="0">
+                        <label for="promotions">Promotions</label>
+                    </div>
+
+                    <div class="form_check_date" class="form-group">
+                        <label for="datedebut">Date de début</label>
+                        <input type="date" id="datedebut" name="datedebut">
+                        <label for="datefin">Date de début</label>
+                        <input type="date" id="datefin" name="datefin">
+                    </div>
+                    <div class="form_check_pourcentage" class="form-group">
+                        <label for="pourcentage">Reduction en  %</label>
+                        <input
+                        type="number"
+                        class="form-control"
+                        id="pourcentage"
+                        name="pourcentage"
+                        aria-describedby="pourcentageHelp"/>
+                    </div>
+                </div>
+
+
+
+                <button type="submit" class="btn btn-primary">Ajouter Produit</button>
+            </div>
+
+    </form>
+</div>
+
+<script>
+    function previewImage(event) {
+      var reader = new FileReader();
+      reader.onload = function(){
+        var output = document.getElementById('preview-image');
+        output.src = reader.result;
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    }
+    </script>
 
 {%endblock%}
