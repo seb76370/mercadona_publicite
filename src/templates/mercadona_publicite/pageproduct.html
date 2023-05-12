@@ -92,9 +92,22 @@
             </div>
 
     </form>
+
+</div>
+<div class="container__newcat">
+<form action="{% url 'add_cat' %}" method="post">
+    {% csrf_token %}
+    <label for="libelle">Nouvelle Categorie</label>
+    <input type="text" id="libelle" name="libelle" value = "">
+    <button type="submit" class="btn btn-primary">Ajouter la nouvelle Catégorie</button>
+  </form>
 </div>
 
 <script>
+
+    const addnewcat = document document.querySelector('#addnewcat')
+
+    addnewcat.img_selected.addEventListener('click',add_newcategorie)
 
     const img_selected = document.getElementById("id_images")
   
@@ -145,6 +158,12 @@
             dateFields.style.display = "none";
             pourcentageFields.style.display = "none";
         }
+    }
+
+    function add_newcategorie(e){
+        e.preventDefault();
+        alert(e.target)
+
     }
 
     togglePromotionsFields()

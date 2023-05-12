@@ -62,6 +62,14 @@ input {
   width: 80vw;
 }
 
+.container__newcat{
+  margin-top: 100px;
+  padding: 20px;
+  width: 80vw;
+  box-shadow: 2px 2px black;
+  border-radius: 20px;
+}
+
 .product_form {
   border-radius: 20px;
   /* border: purple Solid 2px; */
@@ -75,9 +83,9 @@ input {
   padding-left: 20px;
 }
 
-.product_form .form-group:nth-child(0) {
+/* .product_form .form-group:nth-child(0) {
   background-color: red;
-}
+} */
 
 #preview-image {
   border: black Solid 1px;

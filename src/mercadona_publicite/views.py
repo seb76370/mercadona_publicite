@@ -25,8 +25,8 @@ def index(request):
                 old_promo = p.promotions
                 p.promotions = None
                 p.save()
-                if old_promo:
-                    old_promo.delete()
+                # if old_promo:
+                #     old_promo.delete()
 
     serializer = ProductsSerializers(products, many=True)
 
