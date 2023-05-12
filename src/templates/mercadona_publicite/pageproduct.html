@@ -7,58 +7,53 @@
 
 {% block content%}
 <div class="container_form_product"> 
-    <form class="product_form" method="POST" action="accounts/sign_in/">
+    <form class="product_form" method="POST" enctype="multipart/form-data" action="{% url 'add_product' %}">
         {% csrf_token %}
-
+        <div class="form-group">
             <img src="" class="card-img-top" alt="..." id="preview-image">
-            <input
-            type="file"
-            class="file-input"
-            onchange="previewImage(event)"
-          />
+            {{forms.images}} 
 
+         </div>
             <div class="datas_form_product">
-                <input type="hidden" name="product_id" value="0">
+                <input type="hidden" name="product_id" value={{id}}>
                 <div class="form-group">
                 <label for="libelle">Libelle du Produit</label>
-                <input
-                    type="text"
-                    class="form-control"
-                    id="libelle"
-                    name="libelle"
-                    aria-describedby="libelleHelp"
-                />
+                 {{forms.libelle}} 
                 </div>
-    
-                <div class="form-group">
+
+                <div class="form-group form_description">
                     <label for="description">Description du Produit</label>
-                    <textarea id="description" name="description"
-                            rows="2" 
-                            placeholder="description du produit du produit">
-                    </textarea>
+                     {{forms.description}}
                 </div>
+
                 <div class="form-group">
                     <label for="prix">Prix du Produit</label>
-                    <input
-                    type="number"
-                    class="form-control"
-                    id="prix"
-                    name="prix"
-                    aria-describedby="prixHelp"
-                />
+                   {{forms.prix}} 
                 </div>
+
+                <div class="form-group">
+                    <label for="categorie">Categorie du Produit</label>
+                    {{forms.categorie}}
+                 </div>
                 <div class="form-promotions">
 
                     <div class="form_check_promotion" class="form-group">
-                        <input type="checkbox" id="promotions" name="promotions" value="0">
-                        <label for="promotions">Promotions</label>
-                    </div>
 
+                        {% if promo.promo == True %}
+                            <input type="checkbox" id="promotions" name="promo" value="yes" onchange="togglePromotionsFields()" checked>
+                        {% else %}
+                            <input type="checkbox" id="promotions" name="promo" value="no" onchange="togglePromotionsFields()">
+                        {% endif %}
+                        <label for="promo">Promotions</label>
+                    </div>
+        
+                    {% if promo.promo == True %}
+                    
                     <div class="form_check_date" class="form-group">
                         <label for="datedebut">Date de début</label>
-                        <input type="date" id="datedebut" name="datedebut">
+                        <input type="date" id="datedebut" name="datedebut" value= {{promo.datedebut|date:'Y-m-d'}} required >
                         <label for="datefin">Date de début</label>
-                        <input type="date" id="datefin" name="datefin">
+                        <input type="date" id="datefin" name="datefin" value= {{promo.datefin|date:'Y-m-d'}} required >
                     </div>
                     <div class="form_check_pourcentage" class="form-group">
                         <label for="pourcentage">Reduction en  %</label>
@@ -67,19 +62,56 @@
                         class="form-control"
                         id="pourcentage"
                         name="pourcentage"
-                        aria-describedby="pourcentageHelp"/>
+                        value = {{promo.pourcentage}}
+                        aria-describedby="pourcentageHelp"
+                        required/>
                     </div>
+                    {% else %}
+                    <div class="form_check_date" class="form-group"  style="display:none;">
+                        <label for="datedebut">Date de début</label>
+                        <input type="date" id="datedebut" name="datedebut" >
+                        <label for="datefin">Date de début</label>
+                        <input type="date" id="datefin" name="datefin" >
+                    </div>
+                    <div class="form_check_pourcentage" class="form-group" style="display:none;" >
+                        <label for="pourcentage">Reduction en  %</label>
+                        <input
+                        type="number"
+                        class="form-control"
+                        id="pourcentage"
+                        name="pourcentage"
+                        aria-describedby="pourcentageHelp"
+                        />
+                    </div>
+                    {% endif %}
+
                 </div>
 
-
-
-                <button type="submit" class="btn btn-primary">Ajouter Produit</button>
+                <button type="submit" class="btn btn-primary">Ajouter/modifier le Produit</button>
+                <a href="{% url 'index' %}">Retour au Catalogue</a>
             </div>
 
     </form>
 </div>
 
 <script>
+
+    const img_selected = document.getElementById("id_images")
+  
+    img_selected.addEventListener('change', function() {
+        const file = this.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.addEventListener('load', function() {
+                var output = document.getElementById('preview-image');
+                output.setAttribute('src', this.result);
+            });
+            reader.readAsDataURL(file);
+        }
+    });
+
+
+
     function previewImage(event) {
       var reader = new FileReader();
       reader.onload = function(){
@@ -87,7 +119,44 @@
         output.src = reader.result;
       };
       reader.readAsDataURL(event.target.files[0]);
+    } 
+
+    function togglePromotionsFields() {
+        var checkBox = document.getElementById("promotions");
+        var dateFields = document.getElementsByClassName("form_check_date")[0];
+        var pourcentageFields = document.getElementsByClassName("form_check_pourcentage")[0];
+
+        if (checkBox.checked == true) {
+
+            checkBox.value = "yes"
+            dateFields.style.display = "block";
+            pourcentageFields.style.display = "block";
+            var datedebutInput = document.getElementById("datedebut");
+            datedebutInput.setAttribute("required", "required");
+
+            var datefinInput = document.getElementById("datefin");
+            datefinInput.setAttribute("required", "required");
+
+            var pourcentage = document.getElementById("pourcentage");
+            pourcentage.setAttribute("required", "required");
+
+        } else {
+            checkBox.value = "no"
+            dateFields.style.display = "none";
+            pourcentageFields.style.display = "none";
+        }
     }
+
+    togglePromotionsFields()
+    file = document.querySelector(".card-img-top + a")
+
+    var replacedUrl = file.href.replace("http://127.0.0.1:8000/", "https://dev-passion76.fr/");
+    if (file)
+    {
+        var output = document.getElementById('preview-image');
+        output.setAttribute('src', replacedUrl);
+    } 
+        
     </script>
 
 {%endblock%}

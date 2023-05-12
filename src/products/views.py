@@ -1,5 +1,7 @@
+from datetime import date
+from django import forms
 from django.http import HttpResponse, JsonResponse
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
@@ -8,7 +10,7 @@ from rest_framework.response import Response
 
 from .serializers import  CategorieSerializers, ProductsSerializers, PromotionsSerializers
 from .models import Categories, Promotions
-from .forms import CategoriesForm, ProduitForm
+from .forms import CategoriesForm,  ProductAddForm, ProduitForm
 from .models import Produits
 
 from pprint import pprint
@@ -28,53 +30,94 @@ def add_cat(request):
           return JsonResponse({"message":"fail","error":errors_text})
     
 @csrf_exempt
+# sert a l'ajout et la mise an jour
 def add_product(request):
+    print("toott")
     if request.method != "POST":
-         return HttpResponse("Erreur de requete")
+     return redirect('pageproduct')
     
-    form = ProduitForm(request.POST, request.FILES)
-    if form.is_valid():
-          form.save() 
-          return JsonResponse({"message":"success"})
-    else:
-          errors = form.errors.as_data()
-          print(errors)
-          # errors_text = str(errors['libelle'][0])
-          return JsonResponse({"message":"fail","error":"error"})
-    
-@csrf_exempt
-def delete_product(request,id):
-     if request.method != "DELETE":
-          return HttpResponse("Erreur de requete")
+    product_id = request.POST.get('product_id', 0)
 
+    if str(product_id) != "0":   
+
+     ProduitToupdate = Produits.objects.get(pk=product_id)
+     form = ProductAddForm(request.POST, request.FILES,instance=ProduitToupdate)
+    else:
+
+     form = ProductAddForm(request.POST, request.FILES)
+    if form.is_valid():
+     # on ajoute la promo si necessaire
+     if request.POST.get('promo', 'no') == 'yes':
+          promo = Promotions(
+          datedebut=request.POST.get('datedebut'),
+          datefin=request.POST.get('datefin'),
+          pourcentage=request.POST.get('pourcentage')
+          )
+          promo.save()
+     
+     # Sauvegarde Produit
+     product = form.save()
+
+     # on ajoute la promotion precedement créer
+     if request.POST.get('promo', 'no') == 'yes':
+          product.promotions = promo
+          product.save()
+     else:
+          old_promo = product.promotions
+          product.promotions = None
+          product.save()
+          if old_promo:
+              old_promo.delete()
+
+    else:
+     errors = form.errors.as_data() 
+     return HttpResponse(f"Formulaire Invalide {errors}")
+
+    return redirect('pageproduct')
+
+    
+
+def delete_product(request,id):
      product = Produits.objects.filter(pk=id)
      for p in product:
           promo = p.promotions
-          promo.delete()
+          if promo:
+               promo.delete()
      
      product.delete()
 
-     return JsonResponse({"message":"success"})
+     return redirect('index')
 
 @csrf_exempt
 def update_product(request,id):
-     if request.method != "POST":
-          return HttpResponse("Erreur de requete")
-
+     print("idddd",id)
      product = Produits.objects.get(pk=id)
-   
-     if not product:
-        return JsonResponse({"message":"fail","error":"Produit inconnu"})
-  
-     form = ProduitForm(request.POST, request.FILES, instance=product)
+     ProduitPromo = {
+     'promo':False,
+     'datedebut':"",
+     'datefin':"",
+     'pourcentage':"",
+     }
 
-     if form.is_valid():
-          form.save() 
-          return JsonResponse({"message":"success"})
-     else:
-          errors = form.errors.as_data()
-          print(errors)
-          return JsonResponse({"message":"fail","error":"eee"})
+     print("product.promotions",product.promotions)
+
+     if product.promotions:
+         promo = Promotions.objects.get(pk=product.promotions.id)
+         ProduitPromo = {
+          'promo':True,
+          'datedebut':promo.datedebut,
+          'datefin':promo.datefin,
+          'pourcentage':promo.pourcentage,
+          }
+     print("promotionssss")
+     print(ProduitPromo)
+     form = ProductAddForm(instance = product)
+     context ={
+          'forms':form,
+          'promo':ProduitPromo,
+          'id':id
+     }
+     return render(request, "mercadona_publicite/pageproduct.html",context)
 
 @csrf_exempt
 def list_product(request,categorie_selected = None):
@@ -110,4 +153,10 @@ def list_categorie(request):
      return JsonResponse({"categorie":serializer.data})
 
 def pageproduct(request):
-     return render(request, "mercadona_publicite/pageproduct.html")
+     form = ProductAddForm()
+     context ={
+          'forms':form,
+          'id':0
+     }
+     return render(request, "mercadona_publicite/pageproduct.html",context)
+

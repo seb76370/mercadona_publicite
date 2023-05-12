@@ -1,13 +1,57 @@
-
+{% load static %} 
 <div class="card">
-  <img src={{ card.image }} class="card-img-top" alt="...">
+  <div class="card__img">
+  <img src="{{ base_url }}{{ card.images }}" class="card-img-top" alt="...">
+  </div>
   <div class="card-body">
-    <h5 class="card-title">{{ card.libelle }}</h5>
-    <p class="card-text promotion">{{ card.description }}</p>
+
+    {% comment %} <label class="libelle">ID</label>
+    <p class="card-title">{{ card.id }}</p> {% endcomment %}
+
+    <label class="libelle">Nom du produit</label>
+    <p class="card-title">{{ card.libelle }}</p>
+
+    <label class="libelle">Description du produit</label>
+    <p class="card-text">{{ card.description }}</p>
+
+    <label class="libelle">Categorie du produit</label>
+    <p class="catego card-text">{{ card.categorie.libelle }}</p>
+    
+    <label class="libelle">Prix du produit</label>
+    {% if card.promotions %}
+      <p class="card-text promotions">{{ card.promotions.newprix|floatformat:2 }} € après remise de  {{ card.promotions.pourcentage }} %</p>
+        <label class="libelle">Date de la promotions</label>
+        <p class="card-text promotions">Du : {{ card.promotions.datedebut }}  au {{ card.promotions.datefin }} </p>
+      {% else %}
+        <p class="card-text">{{ card.prix|floatformat:2 }} €</p>
+    {% endif%}
+
+
+    {% comment %} <p class="card-text promotion">{{ card.promotions.datedebut }}</p> {% endcomment %}
+
+    <div class="container__link">
+    {% if user.is_authenticated%}
+
+    <a href="{% url 'update_product' id=card.id %}">Modifier le Produit</a>
+    <a href="{% url 'delete_product' id=card.id %}">Supprimer le Produit</a>
+
+    {% endif%}
+  </div>
+
   </div>
 </div>
 
+<script>
+  function confirmDelete() {
+      if (confirm("Êtes-vous sûr de vouloir supprimer ce produit ?")) {
+          document.getElementById('delete-form').submit();
+      }
+  }
 
+  function modif() {
+          document.getElementById('modify-form').submit();
+  }
+</script>
 
 
 {% comment %} <div class="card">

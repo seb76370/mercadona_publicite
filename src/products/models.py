@@ -3,10 +3,14 @@ from django.db import models
 class Categories(models.Model):
     libelle = models.CharField(max_length=50,unique=True)
 
+    def __str__(self):
+        return str(self.libelle)
+
 class Promotions(models.Model):
     datedebut = models.DateField()
     datefin = models.DateField()
     pourcentage = models.IntegerField(default=0)
+
 
 class Produits(models.Model):
     promotions = models.ForeignKey(Promotions, on_delete=models.CASCADE, related_name='Produits_Promotions',null = True, default =None)

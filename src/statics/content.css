@@ -14,16 +14,18 @@ body {
   width: 100%;
   height: 100%;
   margin: 10px;
-  /* border: Green Solid 2px; */
+  /* border: Green Solid 3px; */
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
+  gap: 10px;
 }
 .container__card {
   display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
   flex-wrap: wrap;
   gap: 10px;
+  /* border: red Solid 3px; */
 }
 
 .card {
@@ -73,10 +75,17 @@ input {
   padding-left: 20px;
 }
 
-.product_form img {
+.product_form .form-group:nth-child(0) {
+  background-color: red;
+}
+
+#preview-image {
   border: black Solid 1px;
+
   width: 300px;
   height: 300px;
+  object-fit: cover;
+  object-position: center;
 }
 
 .datas_form_product {
@@ -91,10 +100,11 @@ input {
   gap: 20px;
 }
 
-.form-promotions{
+.form-promotions,
+.form_description {
   display: flex;
   flex-direction: column;
-  gap:10px;
+  gap: 10px;
 }
 
 .form_check_promotion,
@@ -107,4 +117,9 @@ input {
 
 #pourcentage {
   width: 20%;
+}
+
+#promotions {
+  background-color: red;
+  visibility: visible;
 }

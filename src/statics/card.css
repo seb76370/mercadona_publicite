@@ -1,0 +1,49 @@
+.card{
+    width: 300px;  
+    height: 650px;
+    box-shadow: 2px 2px 2px black;
+    font-size: 10px;
+}
+
+.card p{
+        white-space: pre-wrap;     
+}
+
+.libelle{
+
+    font-style: italic;
+    font-size: 1.2rem;
+    font-weight: 700;
+
+}
+
+.card-text{
+    font-size: 1rem;
+}
+
+.card__img{
+    width: 220px;
+    height: 220px;
+    margin:0px auto;
+}
+.card img{
+   
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+
+
+}
+
+.promotions{
+
+    color :red;
+    font-weight: bold;
+    font-size: 1.1rem;
+
+}
+
+.container__link{
+    display: flex;
+    font-size: 1rem;
+}

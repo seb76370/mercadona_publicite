@@ -29,12 +29,48 @@
           placeholder="Mot de passe"
         />
       </div>
-      <button type="submit" class="btn btn-primary">Se logger</button>
-
+      <button type="submit" class="btn btn-primary">Connection</button>
       {% if user.is_authenticated%}
+      <a href="{% url 'logout_user' %}">De-connection</a>
       <label>Utilisateur connecté : {{ user.username}}</label>
-      <a href="{% url 'pageproduct'%}">Ajouter un Produit</a>
+      <a href="{% url 'pageproduct' %}">Ajouter un Produit</a>
       {% endif%}
     </form>
+    <select id="url-selector" onchange="hideCardsByOptionLabel(this)">
+      {% for cat in ListCats %}
+      <option value="{{ cat.id }}">{{ cat.libelle }}</option>
+      {% endfor %}
+  </select>
   </ul>
 </div>
+
+<script>
+  function hideCardsByOptionLabel(selectElement) {
+    const selectedOption = selectElement.options[selectElement.selectedIndex].textContent;
+    const cards = document.getElementsByClassName('card');
+    if (selectedOption != "tous") {
+      
+      for (let i = 0; i < cards.length; i++)
+      {
+
+        if (cards[i].querySelector(".catego").textContent == selectedOption)
+        {
+          console.log("egale")
+          cards[i].style.display = '';
+        }
+        else{
+          console.log("pas egale")
+          cards[i].style.display = 'none';
+        }
+      }
+  }else{
+    for (let i = 0; i < cards.length; i++)
+    {
+      cards[i].style.display = '';
+    }
+  }
+}
+</script>
+
+
+
