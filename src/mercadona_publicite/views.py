@@ -1,108 +1,48 @@
-from django.http import HttpResponse
-from django.shortcuts import render
-
+import datetime
+from django.http import HttpRequest, HttpResponse
+from django.shortcuts import redirect, render
+from products.forms import CategoriesForm
+from products.models import Categories, Produits, Promotions
+from products.serializers import CategorieSerializers, ProductsSerializers, PromotionsSerializers
+from products.views import list_product
+from pprint import pprint
 # Create your views here.
 
 def index(request):
-    cards = [
+    ListCats=[]
+    cats = Categories.objects.all()
+    ListCats.append({"id":0,"libelle":"tous"})
+    for cat in cats:
+        ListCats.append({"id":cat.id,"libelle":cat.libelle})
 
-        {"libelle":"basket nike",
-         "description":"""Lorem, ipsum dolor sit amet consectetur adipisicing elit. Rerum ab libero
-                        rem. Vero facere facilis possimus autem id, illum reiciendis, perspiciatis
-                        ullam itaque enim nobis sapiente corrupti, molestiae nulla non?""",
-         "image":"https://assets.laboutiqueofficielle.com/w_450,q_auto,f_auto/media/products/2021/05/31/reebok_268771_FAB_GW8357_TPDT_20210615T073244_01.jpg",
-         "promotion":True},
-        {"libelle":"basket adidas",
-         "description":"basket toto",
-         "image":"https://assets.laboutiqueofficielle.com/w_450,q_auto,f_auto/media/products/2021/05/31/reebok_268771_FAB_GW8357_TPDT_20210615T073244_01.jpg",
-         "promotion" :False},
-        {"libelle":"basket adidas",
-         "description":"basket toto",
-         "image":"https://assets.laboutiqueofficielle.com/w_450,q_auto,f_auto/media/products/2021/05/31/reebok_268771_FAB_GW8357_TPDT_20210615T073244_01.jpg",
-         "promotion" :False},
-        {"libelle":"basket adidas",
-         "description":"basket toto",
-         "image":"https://assets.laboutiqueofficielle.com/w_450,q_auto,f_auto/media/products/2021/05/31/reebok_268771_FAB_GW8357_TPDT_20210615T073244_01.jpg",
-         "promotion" :False},
-        {"libelle":"basket adidas",
-         "description":"basket toto",
-         "image":"https://assets.laboutiqueofficielle.com/w_450,q_auto,f_auto/media/products/2021/05/31/reebok_268771_FAB_GW8357_TPDT_20210615T073244_01.jpg",
-         "promotion" :False},
-        {"libelle":"basket adidas",
-         "description":"basket toto",
-         "image":"https://assets.laboutiqueofficielle.com/w_450,q_auto,f_auto/media/products/2021/05/31/reebok_268771_FAB_GW8357_TPDT_20210615T073244_01.jpg",
-         "promotion" :False},
-        {"libelle":"basket adidas",
-         "description":"basket toto",
-         "image":"https://assets.laboutiqueofficielle.com/w_450,q_auto,f_auto/media/products/2021/05/31/reebok_268771_FAB_GW8357_TPDT_20210615T073244_01.jpg",
-         "promotion" :False},
-        {"libelle":"basket adidas",
-         "description":"basket toto",
-         "image":"https://assets.laboutiqueofficielle.com/w_450,q_auto,f_auto/media/products/2021/05/31/reebok_268771_FAB_GW8357_TPDT_20210615T073244_01.jpg",
-         "promotion" :False},
-        {"libelle":"basket adidas",
-         "description":"basket toto",
-         "image":"https://assets.laboutiqueofficielle.com/w_450,q_auto,f_auto/media/products/2021/05/31/reebok_268771_FAB_GW8357_TPDT_20210615T073244_01.jpg",
-         "promotion" :False},{"libelle":"basket nike",
-         "description":"""Lorem, ipsum dolor sit amet consectetur adipisicing elit. Rerum ab libero
-                        rem. Vero facere facilis possimus autem id, illum reiciendis, perspiciatis
-                        ullam itaque enim nobis sapiente corrupti, molestiae nulla non?""",
-         "image":"https://assets.laboutiqueofficielle.com/w_450,q_auto,f_auto/media/products/2021/05/31/reebok_268771_FAB_GW8357_TPDT_20210615T073244_01.jpg",
-         "promotion":True},
-         {"libelle":"basket nike",
-         "description":"""Lorem, ipsum dolor sit amet consectetur adipisicing elit. Rerum ab libero
-                        rem. Vero facere facilis possimus autem id, illum reiciendis, perspiciatis
-                        ullam itaque enim nobis sapiente corrupti, molestiae nulla non?""",
-         "image":"https://assets.laboutiqueofficielle.com/w_450,q_auto,f_auto/media/products/2021/05/31/reebok_268771_FAB_GW8357_TPDT_20210615T073244_01.jpg",
-         "promotion":True}, {"libelle":"basket nike",
-         "description":"""Lorem, ipsum dolor sit amet consectetur adipisicing elit. Rerum ab libero
-                        rem. Vero facere facilis possimus autem id, illum reiciendis, perspiciatis
-                        ullam itaque enim nobis sapiente corrupti, molestiae nulla non?""",
-         "image":"https://assets.laboutiqueofficielle.com/w_450,q_auto,f_auto/media/products/2021/05/31/reebok_268771_FAB_GW8357_TPDT_20210615T073244_01.jpg",
-         "promotion":True},
-        {"libelle":"basket adidas",
-         "description":"basket toto",
-         "image":"https://assets.laboutiqueofficielle.com/w_450,q_auto,f_auto/media/products/2021/05/31/reebok_268771_FAB_GW8357_TPDT_20210615T073244_01.jpg",
-         "promotion" :False},
-        {"libelle":"basket adidas",
-         "description":"basket toto",
-         "image":"https://assets.laboutiqueofficielle.com/w_450,q_auto,f_auto/media/products/2021/05/31/reebok_268771_FAB_GW8357_TPDT_20210615T073244_01.jpg",
-         "promotion" :False},
-        {"libelle":"basket adidas",
-         "description":"basket toto",
-         "image":"https://assets.laboutiqueofficielle.com/w_450,q_auto,f_auto/media/products/2021/05/31/reebok_268771_FAB_GW8357_TPDT_20210615T073244_01.jpg",
-         "promotion" :False},
-        {"libelle":"basket adidas",
-         "description":"basket toto",
-         "image":"https://assets.laboutiqueofficielle.com/w_450,q_auto,f_auto/media/products/2021/05/31/reebok_268771_FAB_GW8357_TPDT_20210615T073244_01.jpg",
-         "promotion" :False},
-        {"libelle":"basket adidas",
-         "description":"basket toto",
-         "image":"https://assets.laboutiqueofficielle.com/w_450,q_auto,f_auto/media/products/2021/05/31/reebok_268771_FAB_GW8357_TPDT_20210615T073244_01.jpg",
-         "promotion" :False},
-        {"libelle":"basket adidas",
-         "description":"basket toto",
-         "image":"https://assets.laboutiqueofficielle.com/w_450,q_auto,f_auto/media/products/2021/05/31/reebok_268771_FAB_GW8357_TPDT_20210615T073244_01.jpg",
-         "promotion" :False},
-        {"libelle":"basket adidas",
-         "description":"basket toto",
-         "image":"https://assets.laboutiqueofficielle.com/w_450,q_auto,f_auto/media/products/2021/05/31/reebok_268771_FAB_GW8357_TPDT_20210615T073244_01.jpg",
-         "promotion" :False},
-        {"libelle":"basket adidas",
-         "description":"basket toto",
-         "image":"https://assets.laboutiqueofficielle.com/w_450,q_auto,f_auto/media/products/2021/05/31/reebok_268771_FAB_GW8357_TPDT_20210615T073244_01.jpg",
-         "promotion" :False},{"libelle":"basket nike",
-         "description":"""Lorem, ipsum dolor sit amet consectetur adipisicing elit. Rerum ab libero
-                        rem. Vero facere facilis possimus autem id, illum reiciendis, perspiciatis
-                        ullam itaque enim nobis sapiente corrupti, molestiae nulla non?""",
-         "image":"https://assets.laboutiqueofficielle.com/w_450,q_auto,f_auto/media/products/2021/05/31/reebok_268771_FAB_GW8357_TPDT_20210615T073244_01.jpg",
-         "promotion":True},
-         {"libelle":"basket nike",
-         "description":"""Lorem, ipsum dolor sit amet consectetur adipisicing elit. Rerum ab libero
-                        rem. Vero facere facilis possimus autem id, illum reiciendis, perspiciatis
-                        ullam itaque enim nobis sapiente corrupti, molestiae nulla non?""",
-         "image":"https://assets.laboutiqueofficielle.com/w_450,q_auto,f_auto/media/products/2021/05/31/reebok_268771_FAB_GW8357_TPDT_20210615T073244_01.jpg",
-         "promotion":True}]
-    
-    return render(request, "mercadona_publicite/index.html", context ={"cards":cards})
-    
+    # print(ListCats)
+    products = Produits.objects.all()
+    dateday = datetime.date.today()
+    for p in products:
+
+        if p.promotions:
+            print(p.promotions.datedebut,dateday,p.promotions.datefin)
+            if p.promotions.datedebut < dateday or  dateday > p.promotions.datefin:
+                print("promotions hors date")
+                old_promo = p.promotions
+                p.promotions = None
+                p.save()
+                if old_promo:
+                    old_promo.delete()
+
+    serializer = ProductsSerializers(products, many=True)
+
+    for s in serializer.data:
+        if s['categorie']:
+            cat = Categories.objects.get(pk=s['categorie'])
+            serializerCat = CategorieSerializers(cat)
+            s['categorie'] = serializerCat.data
+
+        if s['promotions']:
+            promo = Promotions.objects.get(pk=s['promotions'])
+            serializerPromo = PromotionsSerializers(promo)
+            s['promotions'] = serializerPromo.data
+            s['promotions']["newprix"] = s['prix'] - (s['prix']*s['promotions']['pourcentage'])/100
+    # ,"ListCats":ListCats}
+    return render(request, "mercadona_publicite/index.html", context ={"cards":list(serializer.data),"base_url":"https://dev-passion76.fr/","ListCats":ListCats})
+                                                                       
