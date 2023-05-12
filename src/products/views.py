@@ -17,17 +17,15 @@ from pprint import pprint
 
 @csrf_exempt
 def add_cat(request):
+
     if request.method != "POST":
-         return HttpResponse("Erreur de requete")
+     return HttpResponse("Erreur de requete")
     
     form = CategoriesForm(request.POST)
     if form.is_valid():
           form.save() 
-          return JsonResponse({"message":"success"})
-    else:
-          errors = form.errors.as_data()
-          errors_text = str(errors['libelle'][0])
-          return JsonResponse({"message":"fail","error":errors_text})
+
+    return redirect(request.META.get('HTTP_REFERER'))
     
 @csrf_exempt
 # sert a l'ajout et la mise an jour
@@ -66,8 +64,8 @@ def add_product(request):
           old_promo = product.promotions
           product.promotions = None
           product.save()
-          if old_promo:
-              old_promo.delete()
+          # if old_promo:
+          #     old_promo.delete()
 
     else:
      errors = form.errors.as_data() 
