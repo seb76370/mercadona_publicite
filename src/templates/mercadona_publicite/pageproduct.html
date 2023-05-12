@@ -150,7 +150,7 @@
     togglePromotionsFields()
     file = document.querySelector(".card-img-top + a")
 
-    var replacedUrl = file.href.replace("http://127.0.0.1:8000/", "https://dev-passion76.fr/");
+    var replacedUrl = "https://dev-passion76.fr" + file.href;
     if (file)
     {
         var output = document.getElementById('preview-image');
