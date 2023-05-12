@@ -44,5 +44,5 @@ def index(request):
             s['promotions'] = serializerPromo.data
             s['promotions']["newprix"] = s['prix'] - (s['prix']*s['promotions']['pourcentage'])/100
     # ,"ListCats":ListCats}
-    return render(request, "mercadona_publicite/index.html", context ={"cards":list(serializer.data),"base_url":"https://dev-passion76.fr/","ListCats":ListCats})
+    return render(request, "mercadona_publicite/index.html", context ={"cards":list(serializer.data),"base_url":"https://dev-passion76.fr/mercadona_publicite/src/","ListCats":ListCats})
                                                                        
