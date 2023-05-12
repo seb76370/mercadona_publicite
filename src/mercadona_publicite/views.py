@@ -21,9 +21,7 @@ def index(request):
     for p in products:
 
         if p.promotions:
-            print(p.promotions.datedebut,dateday,p.promotions.datefin)
-            if p.promotions.datedebut < dateday or  dateday > p.promotions.datefin:
-                print("promotions hors date")
+           if p.promotions.datedebut < dateday or  dateday > p.promotions.datefin:
                 old_promo = p.promotions
                 p.promotions = None
                 p.save()
@@ -37,12 +35,16 @@ def index(request):
             cat = Categories.objects.get(pk=s['categorie'])
             serializerCat = CategorieSerializers(cat)
             s['categorie'] = serializerCat.data
-
         if s['promotions']:
+            # print("promooo")
             promo = Promotions.objects.get(pk=s['promotions'])
-            serializerPromo = PromotionsSerializers(promo)
-            s['promotions'] = serializerPromo.data
-            s['promotions']["newprix"] = s['prix'] - (s['prix']*s['promotions']['pourcentage'])/100
-    # ,"ListCats":ListCats}
+            # print(promo.datedebut,dateday)
+            # print(promo.datefin,dateday)
+            if promo.datedebut <= dateday <= promo.datefin:
+                serializerPromo = PromotionsSerializers(promo)
+                s['promotions'] = serializerPromo.data
+                s['promotions']["newprix"] = s['prix'] - (s['prix']*s['promotions']['pourcentage'])/100
+            else:
+                s['promotions'] = None
     return render(request, "mercadona_publicite/index.html", context ={"cards":list(serializer.data),"base_url":"https://dev-passion76.fr/mercadona_publicite/src/","ListCats":ListCats})
                                                                        
