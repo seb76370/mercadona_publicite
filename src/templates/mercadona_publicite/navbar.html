@@ -1,13 +1,5 @@
-<div class="container">
-  <ul class="nav bg-info">
-    {% comment %}
-    <li class="nav-item">
-      <a class="nav-link link-light" href="/">Home</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link link-light" href="/members">MEMBERS</a>
-    </li>
-    {% endcomment %}
+<nav class="container-fluid">
+  <div class="nav">
     <form method="POST" action="accounts/sign_in/">
       {% csrf_token %}
       <div class="form-group">
@@ -41,8 +33,8 @@
       <option value="{{ cat.id }}">{{ cat.libelle }}</option>
       {% endfor %}
   </select>
-  </ul>
-</div>
+  </div>
+</nav>
 
 <script>
   function hideCardsByOptionLabel(selectElement) {

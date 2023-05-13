@@ -16,16 +16,15 @@
     
     {% csrf_token %}
     {% block header %} {%endblock%}
-    {% include 'mercadona_publicite/navbar.html' %}
 
+    {% include 'mercadona_publicite/navbar.html' %}
 
     <div class="container__main">
         <div class="container__card">
             {% block content %} {%endblock%} 
         </div>
-        {% include 'mercadona_publicite/footer.html' %}
     </div>
-<script src="{% static 'app.js' %}"></script>
+    {% include 'mercadona_publicite/footer.html' %}
 
 </body>
 </html>
