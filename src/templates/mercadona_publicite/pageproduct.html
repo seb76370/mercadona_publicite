@@ -105,10 +105,6 @@
 
 <script>
 
-    const addnewcat = document document.querySelector('#addnewcat')
-
-    addnewcat.img_selected.addEventListener('click',add_newcategorie)
-
     const img_selected = document.getElementById("id_images")
   
     img_selected.addEventListener('change', function() {
@@ -160,13 +156,10 @@
         }
     }
 
-    function add_newcategorie(e){
-        e.preventDefault();
-        alert(e.target)
 
-    }
 
     togglePromotionsFields()
+
     let file = document.querySelector(".card-img-top + a")
     var replacedUrl = file.href.replace(":7000", "")
     if (file)
