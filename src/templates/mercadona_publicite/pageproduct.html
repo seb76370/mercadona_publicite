@@ -161,11 +161,16 @@
     togglePromotionsFields()
 
     let file = document.querySelector(".card-img-top + a")
-    var replacedUrl = file.href.replace(":7000", "")
-    if (file)
+
+    const fileimg = file.href
+    var keyword = "uploads";
+    var startIndex = fileimg.indexOf(keyword); // Obtient l'index de début après le mot "upload"
+    var extractedString = fileimg.substring(startIndex);
+    var Urlimg = `https://dev-passion76.fr/mercadona_publicite/src/${extractedString}`
+    if (fileimg)
     {
         var output = document.getElementById('preview-image');
-        output.setAttribute('src', replacedUrl);
+        output.setAttribute('src', Urlimg);
     } 
         
     </script>
