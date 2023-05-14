@@ -48,3 +48,5 @@ def index(request):
                 s['promotions'] = None
     return render(request, "mercadona_publicite/index.html", context ={"cards":list(serializer.data),"base_url":"https://dev-passion76.fr/mercadona_publicite/src/","ListCats":ListCats})
                                                                        
+def tuto(request):
+    return render(request, "mercadona_publicite/tuto.html")

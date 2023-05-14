@@ -165,3 +165,26 @@ nav{
   justify-content: center;
   align-items: center;
 }
+
+video{
+  margin-top: 20px;
+  width: 600px;
+  height: 300px;
+
+}
+h1,h3{
+  color: #0B5ED7;
+}
+
+li{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  Border: #0B5ED7 Solid 1px;
+  list-style: none;
+  margin: 20px;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 2px 2px 2px black;
+}
