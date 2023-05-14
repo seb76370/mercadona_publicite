@@ -15,7 +15,7 @@ from .models import Produits
 
 from pprint import pprint
 
-@csrf_exempt
+t
 def add_cat(request):
 
     if request.method != "POST":
@@ -35,7 +35,7 @@ def add_cat(request):
     except:
      # version postman tets api
      return JsonResponse({"status":"sucess","catID":cat.id})    
-@csrf_exempt
+
 # sert a l'ajout et la mise an jour
 def add_product(request):
 
@@ -97,9 +97,8 @@ def delete_product(request,id):
       
      return redirect('index')
 
-@csrf_exempt
+
 def update_product(request,id):
-     print("idddd",id)
      product = Produits.objects.get(pk=id)
      ProduitPromo = {
      'promo':False,
@@ -128,7 +127,7 @@ def update_product(request,id):
      }
      return render(request, "mercadona_publicite/pageproduct.html",context)
 
-@csrf_exempt
+
 def list_product(request,categorie_selected = None):
      if request.method != "GET":
           return HttpResponse("Erreur de requete")
