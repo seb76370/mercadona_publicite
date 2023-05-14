@@ -6,7 +6,7 @@
 {%endblock%} 
 
 {% block content%}
-<div class="container_form_product"> 
+<div class="container__main"> 
     <form class="product_form" method="POST" enctype="multipart/form-data" action="{% url 'add_product' %}">
         {% csrf_token %}
         <div class="form-group">
@@ -92,16 +92,16 @@
             </div>
 
     </form>
+    <div class="container__newcat">
+        <form action="{% url 'add_cat' %}" method="post">
+            {% csrf_token %}
+            <label for="libelle">Nouvelle Categorie</label>
+            <input type="text" id="libelle" name="libelle" value = "">
+            <button type="submit" class="btn btn-primary">Ajouter la nouvelle Catégorie</button>
+        </form>
+    </div>
+</div>
 
-</div>
-<div class="container__newcat">
-<form action="{% url 'add_cat' %}" method="post">
-    {% csrf_token %}
-    <label for="libelle">Nouvelle Categorie</label>
-    <input type="text" id="libelle" name="libelle" value = "">
-    <button type="submit" class="btn btn-primary">Ajouter la nouvelle Catégorie</button>
-  </form>
-</div>
 
 <script>
 
@@ -162,6 +162,7 @@
 
     let file = document.querySelector(".card-img-top + a")
 
+
     const fileimg = file.href
     var keyword = "uploads";
     var startIndex = fileimg.indexOf(keyword); // Obtient l'index de début après le mot "upload"
@@ -172,6 +173,11 @@
         var output = document.getElementById('preview-image');
         output.setAttribute('src', Urlimg);
     } 
+
+    file.style.display = "none";
+    while (window.find("Currently: ")) {
+        document.execCommand("delete");
+      }
         
     </script>
 

@@ -5,19 +5,27 @@
 }
 
 body {
-  width: 95%;
-  margin: 5px auto;
+  width: 100%;
+  min-height: 100vh;
+  background-color: #D5D6DA;
+  background-position: center center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   /* border: red Solid 3px; */
 }
 
 .container__main {
-  width: 100%;
-  height: 100%;
-  margin: 10px;
-  /* border: Green Solid 3px; */
+  margin-top:20px;
+  /* border: blue Solid 3px; */
   display: flex;
   flex-direction: column;
+  flex:1;
+  align-items: center;
+  max-width: 1380px;
+  margin-inline: auto;
   gap: 10px;
+  position: relative;
 }
 .container__card {
   display: flex;
@@ -37,7 +45,9 @@ body {
 }
 
 #sticky-footer {
+  margin-top: 5rem;
   width: 100%;
+  height: 70px;
 }
 
 form {
@@ -57,16 +67,12 @@ input {
   height: 35px;
 }
 
-.container_form_product {
-  /* border: red Solid 2px; */
-  width: 80vw;
-}
 
 .container__newcat{
   margin-top: 100px;
   padding: 20px;
   width: 80vw;
-  box-shadow: 2px 2px black;
+  /* box-shadow: 2px 2px black; */
   border-radius: 20px;
 }
 
@@ -100,7 +106,7 @@ input {
   padding: 10px;
   /* border: orangered Solid 2px; */
   border-radius: 20px;
-  box-shadow: 2px 2px black;
+  /* box-shadow: 2px 2px black; */
   width: 100%;
   height: 80%;
   display: flex;
@@ -130,4 +136,32 @@ input {
 #promotions {
   background-color: red;
   visibility: visible;
+}
+
+nav{
+  background-color: #9a9b9c;
+  margin-inline: 0;
+  padding-block:1rem;
+}
+.nav{
+
+  display: flex;
+  align-items: center;
+
+}
+
+#url-selector{
+  height: 2.5rem;
+}
+
+#deconnexion{
+
+  background-color: #0B5ED7;
+  color:white;
+  border-radius: 5px;
+  width: 120px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
