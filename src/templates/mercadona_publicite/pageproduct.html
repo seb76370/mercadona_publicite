@@ -162,6 +162,7 @@
 
     let file = document.querySelector(".card-img-top + a")
 
+
     const fileimg = file.href
     var keyword = "uploads";
     var startIndex = fileimg.indexOf(keyword); // Obtient l'index de début après le mot "upload"
@@ -172,6 +173,11 @@
         var output = document.getElementById('preview-image');
         output.setAttribute('src', Urlimg);
     } 
+
+    file.style.display = "none";
+    while (window.find("Currently: ")) {
+        document.execCommand("delete");
+      }
         
     </script>
 

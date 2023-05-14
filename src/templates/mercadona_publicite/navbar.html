@@ -21,9 +21,11 @@
           placeholder="Mot de passe"
         />
       </div>
+      {% if user.is_authenticated == False%}
       <button type="submit" class="btn btn-primary">Connection</button>
+      {% endif%}
       {% if user.is_authenticated%}
-      <a href="{% url 'logout_user' %}">De-connection</a>
+      <a id="deconnexion" href="{% url 'logout_user' %}">De-connection</a>
       <label>Utilisateur connecté : {{ user.username}}</label>
       <a href="{% url 'pageproduct' %}">Ajouter un Produit</a>
       {% endif%}

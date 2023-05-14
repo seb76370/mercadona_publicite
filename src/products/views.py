@@ -64,8 +64,8 @@ def add_product(request):
           old_promo = product.promotions
           product.promotions = None
           product.save()
-          # if old_promo:
-          #     old_promo.delete()
+          if old_promo:
+              old_promo.delete()
 
     else:
      errors = form.errors.as_data() 
