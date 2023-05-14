@@ -20,17 +20,25 @@ def add_cat(request):
 
     if request.method != "POST":
      return HttpResponse("Erreur de requete")
-    
     form = CategoriesForm(request.POST)
-    if form.is_valid():
-          form.save() 
 
-    return redirect(request.META.get('HTTP_REFERER'))
-    
+    if form.is_valid():
+     print('################')
+     cat = form.save()
+     print("newcat",cat.id) 
+    else:
+     errors = form.errors.as_data() 
+     print(errors)
+
+    try:
+     return redirect(request.META.get('HTTP_REFERER'))
+    except:
+     # version postman tets api
+     return JsonResponse({"status":"sucess","catID":cat.id})    
 @csrf_exempt
 # sert a l'ajout et la mise an jour
 def add_product(request):
-    print("toott")
+
     if request.method != "POST":
      return redirect('pageproduct')
     
@@ -41,7 +49,6 @@ def add_product(request):
      ProduitToupdate = Produits.objects.get(pk=product_id)
      form = ProductAddForm(request.POST, request.FILES,instance=ProduitToupdate)
     else:
-
      form = ProductAddForm(request.POST, request.FILES)
     if form.is_valid():
      # on ajoute la promo si necessaire
@@ -71,19 +78,23 @@ def add_product(request):
      errors = form.errors.as_data() 
      return HttpResponse(f"Formulaire Invalide {errors}")
 
+    if request.POST.get('test', "no") == "yes":
+     return JsonResponse({"status":"sucess","id":product.id}) 
+     
     return redirect('pageproduct')
 
-    
-
+@csrf_exempt
 def delete_product(request,id):
      product = Produits.objects.filter(pk=id)
      for p in product:
           promo = p.promotions
           if promo:
                promo.delete()
-     
-     product.delete()
 
+     product.delete()
+     if request.GET.get('test','no') == "yes":
+          return JsonResponse({"status":"sucess"})
+      
      return redirect('index')
 
 @csrf_exempt

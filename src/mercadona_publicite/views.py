@@ -6,7 +6,6 @@ from products.models import Categories, Produits, Promotions
 from products.serializers import CategorieSerializers, ProductsSerializers, PromotionsSerializers
 from products.views import list_product
 from pprint import pprint
-# Create your views here.
 
 def index(request):
     ListCats=[]

@@ -42,7 +42,9 @@ INSTALLED_APPS = [
     'django_extensions',
     'bootstrap5',
     'accounts',
-    'products'
+    'products',
+    'drf_yasg',
+
 ]
 
 MIDDLEWARE = [
@@ -131,3 +133,15 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / "statics",
 ]
+
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'basic': {
+            'type': 'basic'
+        }
+    },
+}
+
+REDOC_SETTINGS = {
+   'LAZY_RENDERING': False,
+}
