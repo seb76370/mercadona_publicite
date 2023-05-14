@@ -43,7 +43,6 @@ INSTALLED_APPS = [
     'bootstrap5',
     'accounts',
     'products',
-    'drf_yasg',
 
 ]
 
