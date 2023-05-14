@@ -15,7 +15,7 @@ from .models import Produits
 
 from pprint import pprint
 
-t
+
 def add_cat(request):
 
     if request.method != "POST":
