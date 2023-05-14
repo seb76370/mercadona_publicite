@@ -15,7 +15,7 @@ body {
   /* border: red Solid 3px; */
 }
 
-.container__main {
+.container__main, .container__main_test, .container__graph {
   margin-top:20px;
   /* border: blue Solid 3px; */
   display: flex;
@@ -27,6 +27,19 @@ body {
   gap: 10px;
   position: relative;
 }
+
+.container__main_test{
+  flex-direction: row;
+  width: 40%;
+}
+
+.container__graph{
+  Border: Green Solid 1px;
+
+  width: 500px;
+  height: 500px;
+}
+
 .container__card {
   display: flex;
   justify-content: flex-start;

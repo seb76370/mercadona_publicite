@@ -1,11 +1,12 @@
 import datetime
 from django.http import HttpRequest, HttpResponse
-from django.shortcuts import redirect, render
-from products.forms import CategoriesForm
-from products.models import Categories, Produits, Promotions
+from django.shortcuts import render
+from products.models import Categories, Produits, Promotions, Tests
 from products.serializers import CategorieSerializers, ProductsSerializers, PromotionsSerializers
 from products.views import list_product
 from pprint import pprint
+from django.views.generic import TemplateView
+
 
 def index(request):
     ListCats=[]
@@ -49,3 +50,15 @@ def index(request):
                                                                        
 def tuto(request):
     return render(request, "mercadona_publicite/tuto.html")
+
+def test(request):
+    return render(request, "tests/test.html")
+
+class EditorChartView(TemplateView):
+    template_name = 'tests/test.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["qs"] = Tests.objects.all()
+        return context
+

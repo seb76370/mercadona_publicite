@@ -23,12 +23,13 @@ from rest_framework import permissions
 
 
 from rest_framework import routers
-from .views import index
+from .views import index,EditorChartView
 
 urlpatterns = [
     path('',index,name="index"),
     path('admin/', admin.site.urls),
     path('tuto/', tuto,name="tuto"),
+    path('test/', EditorChartView.as_view(),name="EditorChartView"),
     path('products/', include('products.urls')),
     path('accounts/', include('accounts.urls')),
 ]

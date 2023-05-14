@@ -19,3 +19,8 @@ class Produits(models.Model):
     description = models.CharField(max_length=200)
     prix = models.FloatField(default=0.0)
     images = models.FileField(upload_to='uploads/%Y/%m/%d/')
+
+class Tests(models.Model):
+    libelle = models.CharField(max_length=50)
+    description = models.CharField(max_length=100,default="")
+    result = models.BooleanField(default=False)
