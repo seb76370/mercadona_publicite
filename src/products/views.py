@@ -83,7 +83,7 @@ def add_product(request):
      
     return redirect('pageproduct')
 
-@csrf_exempt
+
 def delete_product(request,id):
      product = Produits.objects.filter(pk=id)
      for p in product:
