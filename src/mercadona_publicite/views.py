@@ -61,4 +61,3 @@ class EditorChartView(TemplateView):
         context = super().get_context_data(**kwargs)
         context["qs"] = Tests.objects.all()
         return context
-
