@@ -6,6 +6,7 @@ from products.serializers import CategorieSerializers, ProductsSerializers, Prom
 from products.views import list_product
 from pprint import pprint
 from django.views.generic import TemplateView
+from django.http import HttpResponse
 
 
 def index(request):

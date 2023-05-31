@@ -12,7 +12,7 @@ from .serializers import  CategorieSerializers, ProductsSerializers, PromotionsS
 from .models import Categories, Promotions
 from .forms import CategoriesForm,  ProductAddForm, ProduitForm
 from .models import Produits
-
+import pdfkit
 from pprint import pprint
 
 
@@ -168,3 +168,26 @@ def pageproduct(request):
      }
      return render(request, "mercadona_publicite/pageproduct.html",context)
 
+
+
+def generate_pdf(produit):
+    # Générer le contenu HTML du produit
+    html_content = f"""
+        <h1>{"produit"}</h1>
+        <p>Description : {"produit"}</p>
+        <p>Prix : {"produit"}</p>
+        <!-- Ajoutez d'autres champs du produit si nécessaire -->
+    """
+
+    # Chemin d'accès vers l'exécutable wkhtmltopdf
+    config = pdfkit.configuration(wkhtmltopdf='/usr/bin/wkhtmltopdf')
+
+    # Options de configuration pour la conversion PDF
+    options = {
+        'quiet': '',
+        'page-size': 'A4',
+    }
+
+    # Convertir le contenu HTML en PDF
+    pdf_data = pdfkit.from_string(html_content, False, configuration=config, options=options)
+    return pdf_data
