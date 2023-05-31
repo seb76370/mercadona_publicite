@@ -19,3 +19,4 @@ drf-yasg
 coverage
 pytest
 pytest-cov
+pdfkit
