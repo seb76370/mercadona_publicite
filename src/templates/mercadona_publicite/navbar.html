@@ -1,3 +1,5 @@
+{% load static %}
+
 <nav class="container-fluid">
   <div class="nav">
     <form method="POST" action="accounts/sign_in/">
@@ -38,8 +40,9 @@
   <div class="catalogue">
   <a href="{% url 'index' %}">Retour au Catalogue</a>
   </div>
+  {% comment %} <button class="DownloadPDF"></button>
+  <a href="{% url 'download_pdf' %}">download_pdf</a> {% endcomment %}
 
-  <button></button>
   </div>
 </nav>
 
@@ -54,11 +57,11 @@
 
         if (cards[i].querySelector(".catego").textContent == selectedOption)
         {
-          console.log("egale")
+
           cards[i].style.display = '';
         }
         else{
-          console.log("pas egale")
+
           cards[i].style.display = 'none';
         }
       }
@@ -69,6 +72,7 @@
     }
   }
 }
+
 
 </script>
 

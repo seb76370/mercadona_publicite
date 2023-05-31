@@ -1,15 +1,17 @@
 {% extends 'mercadona_publicite/base.html' %}
-{% load static %} 
+{% load static %}
 {% block header%}
     <link rel="stylesheet" href="{% static 'promotion.css' %}" />
     <link rel="stylesheet" href="{% static 'content.css' %}" />
     <link rel="stylesheet" href="{% static 'card.css' %}" />
-{%endblock%} 
+{%endblock%}
 
 {% block content%}
-
-     {% for card in cards %} 
-        {% include 'mercadona_publicite/card.html' with card=card %} 
-    {% endfor %} 
+     {% for card in cards %}
+        {% include 'mercadona_publicite/card.html' with card=card %}
+        {% comment %} {% if not forloop.last and forloop.counter|divisibleby:3 %}
+            <div class="break">break</div>
+        {% endif %} {% endcomment %}
+    {% endfor %}
 
 {%endblock%}

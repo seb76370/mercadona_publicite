@@ -1,4 +1,5 @@
 from django.db import models
+from django.http import HttpResponse
 
 class Categories(models.Model):
     libelle = models.CharField(max_length=50,unique=True)
@@ -24,3 +25,4 @@ class Tests(models.Model):
     libelle = models.CharField(max_length=50)
     description = models.CharField(max_length=100,default="")
     result = models.BooleanField(default=False)
+

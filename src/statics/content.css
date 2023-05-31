@@ -7,7 +7,7 @@
 body {
   width: 100%;
   min-height: 100vh;
-  background-color: #D5D6DA;
+  background-color: #d5d6da;
   background-position: center center;
   display: flex;
   flex-direction: column;
@@ -15,12 +15,14 @@ body {
   /* border: red Solid 3px; */
 }
 
-.container__main, .container__main_test, .container__graph {
-  margin-top:20px;
+.container__main,
+.container__main_test,
+.container__graph {
+  margin-top: 20px;
   /* border: blue Solid 3px; */
   display: flex;
   flex-direction: column;
-  flex:1;
+  flex: 1;
   align-items: center;
   max-width: 1380px;
   margin-inline: auto;
@@ -28,13 +30,13 @@ body {
   position: relative;
 }
 
-.container__main_test{
+.container__main_test {
   flex-direction: row;
   width: 40%;
 }
 
-.container__graph{
-  Border: Green Solid 1px;
+.container__graph {
+  border: Green Solid 1px;
 
   width: 500px;
   height: 500px;
@@ -80,8 +82,7 @@ input {
   height: 35px;
 }
 
-
-.container__newcat{
+.container__newcat {
   margin-top: 100px;
   padding: 20px;
   width: 80vw;
@@ -151,26 +152,23 @@ input {
   visibility: visible;
 }
 
-nav{
+nav {
   background-color: #9a9b9c;
   margin-inline: 0;
-  padding-block:1rem;
+  padding-block: 1rem;
 }
-.nav{
-
+.nav {
   display: flex;
   align-items: center;
-
 }
 
-#url-selector{
+#url-selector {
   height: 2.5rem;
 }
 
-#deconnexion{
-
-  background-color: #0B5ED7;
-  color:white;
+#deconnexion {
+  background-color: #0b5ed7;
+  color: white;
   border-radius: 5px;
   width: 120px;
   height: 35px;
@@ -179,22 +177,22 @@ nav{
   align-items: center;
 }
 
-video{
+video {
   margin-top: 20px;
   width: 600px;
   height: 300px;
-
 }
-h1,h3{
-  color: #0B5ED7;
+h1,
+h3 {
+  color: #0b5ed7;
 }
 
-li{
+li {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  Border: #0B5ED7 Solid 1px;
+  border: #0b5ed7 Solid 1px;
   list-style: none;
   margin: 20px;
   padding: 10px;
@@ -202,11 +200,29 @@ li{
   box-shadow: 2px 2px 2px black;
 }
 
-.catalogue{
+.catalogue {
   margin-left: 10px;
 }
 
-
-.DwonloadPDF{
-  background: url(/image.png);
+.DownloadPDF {
+  background: url("pdf.jpg") 50% 0 no-repeat;
+  width: 50px;
+  height: 50px;
+  margin-left: 50px;
 }
+
+/* @media print {
+  .nav {
+    display: none;
+  }
+
+  .break-before {
+    page-break-before: always;
+  }
+
+
+.card{
+  height: 600px;
+}
+
+} */
