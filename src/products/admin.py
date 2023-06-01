@@ -3,7 +3,6 @@ from django.contrib import admin
 from django.http import HttpResponse
 from django.utils.html import format_html
 from products.views import generate_pdf
-
 from .models import Produits, Tests
 
 # Register your models here.
