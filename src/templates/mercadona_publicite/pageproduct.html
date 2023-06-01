@@ -7,6 +7,9 @@
 
 {% block content%}
 <div class="container__main"> 
+    {% if user.is_authenticated %}
+    <button id="btn_extraction" onclick="window.location.href='https://dev-passion76.fr:8000/products/generate_pdf'">Extraction des promotions</button>
+    {% endif%}
     <form class="product_form" method="POST" enctype="multipart/form-data" action="{% url 'add_product' %}">
         {% csrf_token %}
         <div class="form-group">
