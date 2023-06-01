@@ -20,3 +20,4 @@ coverage
 pytest
 pytest-cov
 pdfkit
+reportlab
