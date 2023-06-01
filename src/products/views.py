@@ -1,6 +1,6 @@
 from datetime import date
 from django import forms
-from django.http import HttpResponse, JsonResponse
+from django.http import FileResponse, HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import redirect, render
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
@@ -12,7 +12,15 @@ from .serializers import  CategorieSerializers, ProductsSerializers, PromotionsS
 from .models import Categories, Promotions
 from .forms import CategoriesForm,  ProductAddForm, ProduitForm
 from .models import Produits
-import pdfkit
+
+from reportlab.pdfgen import canvas
+from reportlab.lib.units import inch
+from reportlab.lib.pagesizes import letter, landscape
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph,Image as RLImage,PageBreak
+from reportlab.lib import colors
+from reportlab.lib.styles import getSampleStyleSheet
+
+import io
 from pprint import pprint
 
 
@@ -170,24 +178,48 @@ def pageproduct(request):
 
 
 
-def generate_pdf(produit):
-    # Générer le contenu HTML du produit
-    html_content = f"""
-        <h1>{"produit"}</h1>
-        <p>Description : {"produit"}</p>
-        <p>Prix : {"produit"}</p>
-        <!-- Ajoutez d'autres champs du produit si nécessaire -->
-    """
+def generate_pdf(request):
+     buf = io.BytesIO()
+     c = canvas.Canvas(buf,pagesize=letter)
+     urlbase = "https://dev-passion76.fr/mercadona_publicite/src"
+     url="https://camo.githubusercontent.com/290dfc007c9a10e82af412f0e2a1cd3ec8378d1e8adf1e4f868af367349bacd1/68747470733a2f2f74616c656e74706f72747567616c2e636f6d2f77702d636f6e74656e742f75706c6f6164732f323032322f30312f6d65726361646f6e615f656d707265676f5f74726162616c686f5f6573746167696f5f63616e64696461747572615f6573706f6e74616e65615f74616c656e745f706f72747567616c5f6571756970615f62616e6e65722d373638783336382e6a706567"
+     c.drawInlineImage(url, 0, 600, width=650,height=200)
 
-    # Chemin d'accès vers l'exécutable wkhtmltopdf
-    config = pdfkit.configuration(wkhtmltopdf='/usr/bin/wkhtmltopdf')
+     data = []
+     data.append(["Libelle","Description","Prix en €","Date de début","Date de fin","Pourcentage","image"])
+     for i, produit in enumerate(Produits.objects.filter(promotions__isnull=False), start=1):
+        image = RLImage(urlbase+ produit.images.url, width=80, height=80)
+        data.append([produit.libelle,produit.description,str(produit.prix) + "€",str(produit.promotions.datedebut),str(produit.promotions.datefin),str(produit.promotions.pourcentage) + "%",image])
 
-    # Options de configuration pour la conversion PDF
-    options = {
-        'quiet': '',
-        'page-size': 'A4',
-    }
 
-    # Convertir le contenu HTML en PDF
-    pdf_data = pdfkit.from_string(html_content, False, configuration=config, options=options)
-    return pdf_data
+     styles = getSampleStyleSheet()
+     style = styles["BodyText"]
+     # header = Paragraph("<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><bold><font size=18>Produit en Promotion</font></bold>", style)
+
+     t = Table(data)
+     t.setStyle(TableStyle([
+          ("BOX", (0, 0), (-1, -1), 0.25, colors.black),
+          ('INNERGRID', (0, 0), (-1, -1), 0.25, colors.black),
+          ('ALIGN', (0, 0), (-1, -1), 'CENTER'),  
+          ('VALIGN', (0, 0), (-1, -1), 'MIDDLE') 
+     ]))
+     data_len = len(data)
+
+     for each in range(data_len):
+          if each % 2 == 0:
+               bg_color = colors.whitesmoke
+          else:
+               bg_color = colors.lightgrey
+
+          t.setStyle(TableStyle([('BACKGROUND', (0, each), (-1, each), bg_color)]))
+
+     aW = 1340
+     aH = 450
+
+     w, h = t.wrap(aW, aH)
+     t.drawOn(c, 10, aH-(len(data)-1)*100)
+
+     c.save()
+     buf.seek(0)
+     return FileResponse(buf,as_attachment=True,filename="ProduitsPromotions.pdf")
+

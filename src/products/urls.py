@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
-from products.views import add_cat,add_product,delete_product,update_product,list_product
+from products.views import add_cat,add_product,delete_product, generate_pdf,update_product,list_product
 from products.views import list_categorie,pageproduct
 
 urlpatterns = [
@@ -28,4 +28,5 @@ urlpatterns = [
     path('update_product/<int:id>', update_product,name="update_product"),
     path('delete_product/<int:id>', delete_product,name="delete_product"),
     path('list_categorie/', list_categorie,name="list_cat"),
+    path('generate_pdf/', generate_pdf,name="generate_pdf"),
 ]
